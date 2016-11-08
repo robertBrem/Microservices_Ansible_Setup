@@ -1,0 +1,8 @@
+---
+- name: set up docker compose in a container
+  template:
+    src: docker-compose.j2
+    dest: /usr/local/bin/docker-compose
+    owner: root
+    group: root
+    mode: 0750

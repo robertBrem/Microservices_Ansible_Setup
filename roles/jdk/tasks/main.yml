@@ -1,0 +1,5 @@
+---
+- name: git jdk
+  apt:
+    name: default-jdk
+    state: present

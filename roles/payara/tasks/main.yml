@@ -1,0 +1,13 @@
+---
+- name: download Payara
+  get_url:
+    url: http://bit.ly/1Gm0GIw
+    dest: /home/robert/Desktop
+- name: unzip Payara
+  unarchive:
+    src: /home/robert/Desktop/payara-4.1.1.154.zip
+    dest: /home/robert/Desktop
+- name: remove zip
+  file:
+    path: /home/robert/Desktop/payara-4.1.1.154.zip
+    state: absent

@@ -1,0 +1,13 @@
+---
+- name: download IntelliJ
+  get_url:
+    url: https://download.jetbrains.com/idea/ideaIU-2016.2.4.tar.gz
+    dest: /home/robert/Desktop
+- name: unzip IntelliJ
+  unarchive:
+    src: /home/robert/Desktop/ideaIU-2016.2.4.tar.gz
+    dest: /home/robert/Desktop
+- name: delete tar
+  file:
+    path: /home/robert/Desktop/ideaIU-2016.2.4.tar.gz
+    state: absent

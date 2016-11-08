@@ -1,0 +1,5 @@
+---
+- name: maven install
+  apt:
+    name: maven
+    state: present

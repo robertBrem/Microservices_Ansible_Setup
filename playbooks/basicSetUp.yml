@@ -1,0 +1,21 @@
+---
+- hosts: basicSetUp
+
+  roles:
+  - role: docker
+    docker_usernames:
+    - 'robert'
+    
+  - role: vim 
+
+  - role: git
+
+  - role: docker_compose
+
+  - role: jdk
+
+  - role: maven
+
+  - role: intellij
+
+  - role: payara

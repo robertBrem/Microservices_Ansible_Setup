@@ -1,0 +1,60 @@
+---
+- name: add certificates
+  apt:
+    name: '{{ item }}'
+    state: present
+  with_items: 
+  - ca-certificates
+  - apt-transport-https
+
+- name: adding apt key for docker repo
+  apt_key:
+    data: "{{ lookup('file', 'docker-apt-key.gpg') }}"
+    state: present
+
+- name: add docker apt repo
+  apt_repository:
+    repo: '{{ item }}'
+    state: present
+  with_items:
+  - deb https://apt.dockerproject.org/repo ubuntu-xenial main
+
+- name: update apt cache
+  apt:
+    update_cache: yes
+
+- name: delete lxc-docker
+  apt:
+    name: lxc-docker
+    state: absent
+
+- name: install linux-image-extra
+  apt: 
+    name: '{{ item }}'
+    state: present
+  with_items:
+  - linux-image-extra-{{ ansible_kernel }}
+
+- name: install apparmor
+  apt: 
+    name: apparmor
+    state: present
+
+- name: install docker
+  apt:
+    name: docker-engine
+    state: present
+  notify: restart docker
+
+- name: groupadd docker
+  group: 
+    name: docker
+    state: present
+
+- name: adding user {{ docker_usernames }} to docker
+  user:
+    name: '{{ item }}'
+    groups: docker
+    append: yes
+  changed_when: false
+  with_items: docker_usernames

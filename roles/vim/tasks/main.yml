@@ -1,0 +1,11 @@
+---
+- name: vim install
+  apt:
+    name: vim
+    state: present
+- name: install docker syntax highlighting
+  apt:
+    name: vim-syntax-docker
+    state: present
+- name: activate docker syntax highlighting
+  command: 'vim-addons install dockerfile'
