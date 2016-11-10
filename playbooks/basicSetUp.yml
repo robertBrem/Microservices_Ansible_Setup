@@ -1,21 +1,27 @@
 ---
+
 - hosts: basicSetUp
 
   roles:
   - role: docker
     docker_usernames:
-    - 'robert'
+    - 'rob'
+    sudo: yes
     
   - role: vim 
-
-  - role: git
+    sudo: yes
 
   - role: docker_compose
+    sudo: yes
 
   - role: jdk
+    sudo: yes
 
   - role: maven
+    sudo: yes
 
   - role: intellij
+    dest_folder: '/home/rob/Desktop'
 
   - role: payara
+    dest_folder: '/home/rob/Desktop'

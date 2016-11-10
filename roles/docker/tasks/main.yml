@@ -1,4 +1,8 @@
 ---
+- name: update apt cache
+  apt:
+    update_cache: yes
+
 - name: add certificates
   apt:
     name: '{{ item }}'
@@ -8,9 +12,7 @@
   - apt-transport-https
 
 - name: adding apt key for docker repo
-  apt_key:
-    data: "{{ lookup('file', 'docker-apt-key.gpg') }}"
-    state: present
+  command: 'apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D'
 
 - name: add docker apt repo
   apt_repository:
@@ -23,22 +25,13 @@
   apt:
     update_cache: yes
 
-- name: delete lxc-docker
-  apt:
-    name: lxc-docker
-    state: absent
-
 - name: install linux-image-extra
   apt: 
     name: '{{ item }}'
     state: present
   with_items:
   - linux-image-extra-{{ ansible_kernel }}
-
-- name: install apparmor
-  apt: 
-    name: apparmor
-    state: present
+  - linux-image-extra-virtual
 
 - name: install docker
   apt:

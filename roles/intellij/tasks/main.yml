@@ -1,13 +1,15 @@
 ---
 - name: download IntelliJ
   get_url:
-    url: https://download.jetbrains.com/idea/ideaIU-2016.2.4.tar.gz
-    dest: /home/robert/Desktop
+    url: https://download.jetbrains.com/idea/ideaIU-2016.2.5.tar.gz
+    dest: "{{ dest_folder }}"
+
 - name: unzip IntelliJ
   unarchive:
-    src: /home/robert/Desktop/ideaIU-2016.2.4.tar.gz
-    dest: /home/robert/Desktop
+    src: "{{ dest_folder }}/ideaIU-2016.2.5.tar.gz"
+    dest: "{{ dest_folder }}"
+
 - name: delete tar
   file:
-    path: /home/robert/Desktop/ideaIU-2016.2.4.tar.gz
+    path: "{{ dest_folder }}/ideaIU-2016.2.5.tar.gz"
     state: absent
