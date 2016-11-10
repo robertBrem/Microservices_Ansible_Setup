@@ -1,0 +1,9 @@
+---
+
+- hosts: basicSetUp
+
+  tasks:
+    - name: get user
+      debug:
+        msg: '{{ ansible_user }}'
+

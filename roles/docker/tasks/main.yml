@@ -39,15 +39,20 @@
     state: present
   notify: restart docker
 
+- name: add user to docker
+  command: 'groupadd docker && gpasswd -a {{ ansible_user }} docker'
+  notify: restart docker
+
 - name: groupadd docker
   group: 
     name: docker
     state: present
 
-- name: adding user {{ docker_usernames }} to docker
+- name: adding user to docker
   user:
-    name: '{{ item }}'
+    name: '{{ ansible_user }}'
     groups: docker
     append: yes
-  changed_when: false
-  with_items: docker_usernames
+
+- name: active change
+  command: 'newgrp docker'

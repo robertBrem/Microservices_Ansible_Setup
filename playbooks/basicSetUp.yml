@@ -1,27 +1,31 @@
 ---
+- hosts: basicSetUp
+
+  vars_prompt:
+    - name: "sudo_password"
+      prompt: "Enter sudo password"
+      private: yes
+
+  become: yes
+
+  vars:
+    ansible_sudo_pass: '{{ sudo_password }}'
+
+  roles:
+    - docker
+    - vim 
+    - docker_compose
+    - jdk
+    - maven
 
 - hosts: basicSetUp
 
+  vars:
+    dest_dir: '/home/{{ ansible_user }}/Desktop'
+
   roles:
-  - role: docker
-    docker_usernames:
-    - 'rob'
-    sudo: yes
-    
-  - role: vim 
-    sudo: yes
+    - role: intellij
+      dest_folder: '{{ dest_dir }}'
 
-  - role: docker_compose
-    sudo: yes
-
-  - role: jdk
-    sudo: yes
-
-  - role: maven
-    sudo: yes
-
-  - role: intellij
-    dest_folder: '/home/rob/Desktop'
-
-  - role: payara
-    dest_folder: '/home/rob/Desktop'
+    - role: payara
+      dest_folder: '{{ dest_dir }}'
