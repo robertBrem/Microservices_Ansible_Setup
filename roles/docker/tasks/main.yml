@@ -38,21 +38,3 @@
     name: docker-engine
     state: present
   notify: restart docker
-
-- name: add user to docker
-  command: 'groupadd docker && gpasswd -a {{ ansible_user }} docker'
-  notify: restart docker
-
-- name: groupadd docker
-  group: 
-    name: docker
-    state: present
-
-- name: adding user to docker
-  user:
-    name: '{{ ansible_user }}'
-    groups: docker
-    append: yes
-
-- name: active change
-  command: 'newgrp docker'
