@@ -1,10 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-$instances = 1
-$memory = 1024
-$cpus = 1
-$hostname = "rob"
+$memory = 4096
+$cpus = 2
+$hostname = "rob-01"
 $gui = true
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
@@ -18,8 +17,11 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/xenial64"
+ # config.vm.box = "ubuntu/xenial64"
  # config.vm.box_url = "https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-vagrant.box"
+  config.vm.boot_timeout = 800
+  config.vm.box = "boxcutter/ubuntu1604-desktop"
+  config.vm.box_url = "https://atlas.hashicorp.com/boxcutter/ubuntu1604-desktop"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -39,41 +41,30 @@ Vagrant.configure("2") do |config|
   #
   config.vm.provider "virtualbox" do |vb|
     # Display the VirtualBox GUI when booting the machine
-    vb.gui = false
+    vb.gui = $gui
     # Customize the amount of memory on the VM:
     vb.memory = $memory
     # Customize the amount of memory on the VM:
     vb.cpus = $cpus
-    # install gui
-    vb.gui = $gui
   end
 
-#  (1..$instances).each do |i|
-#    config.vm.define vm_name = $hostname+"-%02d" % i do |ubuntu|
-#      ubuntu.vm.hostname = vm_name
+  # set hostname
+  config.vm.hostname = $hostname
 
-      # Create a private network, which allows host-only access to the machine
-      # using a specific IP.
-#      ubuntu.vm.network "private_network", ip: "172.1.1.#{i+100}"
+  # set ip address
+#  config.vm.network "private_network", ip: "172.1.1.200"
 
-      # Create a forwarded port mapping which allows access to a specific port
-      # within the machine from a port on the host machine. In the example below,
-      # accessing "localhost:8080" will access port 80 on the guest machine.
-      # config.vm.network "forwarded_port", guest: 80, host: 8080
-
-      # Create a public network, which generally matched to bridged network.
-      # Bridged networks make the machine appear as another physical device on
-      # your network.
-      # config.vm.network "public_network"
-      #
-#    end
-#  end
-
-#  config.vm.provision "shell", inline: "sed -i 's/us.archive.ubuntu/au.archive.ubuntu/g' /etc/apt/sources.list && apt-get update && apt-get install ansible -y"
+  # add ssh key to authorized_keys
+  # config.ssh.insert_key = true
+  # add user ssh key to authorized_keys
+#  config.vm.provision "file", source: "./id_rsa.pub", destination: "/tmp/id_rsa.pub"
+#  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+#  config.vm.provision :shell, :inline => "cat /tmp/id_rsa.pub >> /home/ubuntu/.ssh/authorized_keys"
 
   # Run Ansible from the Vagrant VM
   config.vm.provision "ansible_local" do |ansible|
-    ansible.playbook = "playbooks/basicSetUp.yml"
+    #ansible.playbook = "playbooks/basicSetUp.yml"
+    ansible.playbook = "playbooks/test.yml"
     ansible.verbose        = true
     ansible.inventory_path = "hosts"
     ansible.limit = "all"

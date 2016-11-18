@@ -14,3 +14,10 @@
     - maven
     - intellij
     - payara
+
+  tasks:
+    - name: set ubuntu password to ubuntu
+      user:
+        name: ubuntu
+        password: '$6$rounds=656000$0Ea3/2HP26llfVpp$ts44o9RBI6H1stIURR97E1q/YwuOH6.C0od4TL6YCJoq06.6nkWaqFVCkt9Rbhfq1Ozr8ZNqeyXySg8xPkkuR.'
+        state: present

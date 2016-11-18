@@ -5,9 +5,7 @@
     dest: "{{ dest_folder }}"
 
 - name: unzip IntelliJ
-  unarchive:
-    src: "{{ dest_folder }}/ideaIU-2016.2.5.tar.gz"
-    dest: "{{ dest_folder }}"
+  command: 'tar -xzf {{ dest_folder }}/ideaIU-2016.2.5.tar.gz'
 
 - name: delete tar
   file:

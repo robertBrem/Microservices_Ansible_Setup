@@ -5,9 +5,7 @@
     dest: "{{ dest_folder }}"
 
 - name: unzip Payara
-  unarchive:
-    src: "{{ dest_folder }}/payara-4.1.1.154.zip"
-    dest: "{{ dest_folder }}"
+  shell: 'cd {{ {{ dest_folder }} }} && unzip {{ dest_folder }}/payara-4.1.1.154.zip'
 
 - name: remove zip
   file:
