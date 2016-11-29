@@ -40,7 +40,7 @@
   notify: restart docker
 
 - name: add user to docker
-  command: 'groupadd docker && gpasswd -a {{ ansible_user }} docker'
+  command: 'gpasswd -a {{ ansible_user }} docker'
   notify: restart docker
 
 - name: groupadd docker
